@@ -1,0 +1,101 @@
+<div class="grey">
+<p style="font-size:90%">
+ <!DOCTYPE html>
+
+<html lang="en" dir="ltr">
+
+  <head>
+
+    <meta charset="utf-8">
+
+    <title>Example</title>
+
+  </head>
+
+  <body>
+
+    <h2>Current Covid Cases in the US</h2>
+
+ 
+
+    Hello readers. <nav>
+
+    </nav>This webpage fetches JSON APIs for covid cases in the US and the current Seattle weather.<nav>
+
+    </nav> The cases data updates every 24 hrs and the weather updates every few minutes.
+
+<hr><br>
+
+<!--JavaScript to fetch JSON API data for covid cases in the US-->
+
+    <script type="text/javascript">
+
+      fetch('https://api.covidtracking.com/v1/us/current.json')
+
+      .then(response => response.json())
+
+      .then(data => {
+
+        console.log(data[0].positiveIncrease)
+
+        document.querySelector("#case").innerText= '\n' + 'New Cases Yesterday: ' + data[0].positiveIncrease
+
+        document.querySelector("#date").innerText= Date(data[0].date)
+
+        document.querySelector("#death").innerText= '\n' + 'New Deaths Yesterday: ' + data[0].deathIncrease
+      });
+
+    </script>
+
+    
+
+<!--JavaScript to fetch JSON API data for Seattle Weather-->
+
+    <script type="text/javascript">
+
+       fetch('https://api.weatherapi.com/v1/current.json?key=53fc7e713439431cb47125714201311&q=Seattle')
+
+      .then(response => response.json())
+
+      .then(data1 => {
+
+        console.log(data1.current.is_day)
+
+        document.querySelector("#temp").innerText= data1.current.temp_c + " degC" + ", " + 'Feels Like: ' + data1.current.feelslike_c + " degC" + ", " + data1.current.condition.text 
+         
+         var icon = data1.current.condition.icon
+         var iconurl= "http:" + icon
+		 const img = document.querySelector('#weatherIcon');
+         img.setAttribute('src',iconurl)
+      });
+  
+    </script>
+
+
+    <div id="date"></div>
+
+    <div id="case"></div>
+
+    <div id="death"></div>
+
+    <br>Current Seattle Weather:
+    <div><img id="weatherIcon" src="" alt=""></div>
+    <div id="temp"> </div>
+  </body>
+
+</html>
+</p>
+</div>
+<style>
+.grey { 
+background: #f0f0f0; 
+padding: 20px;
+
+text-align: LEFT; 
+}
+</style>
+
+
+
+
+
